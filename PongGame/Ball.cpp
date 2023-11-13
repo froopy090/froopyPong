@@ -96,3 +96,13 @@
 			this->velocityY *= -1;
 		}
 	}
+
+	//returns 1 if either side has won, else 0
+	bool Ball::checkWin() {
+		if (this->positionX >= GetScreenWidth() || this->positionX <= 0) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}

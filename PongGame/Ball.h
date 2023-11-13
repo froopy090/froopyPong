@@ -42,4 +42,6 @@ public:
 	Vector2 getVector2Center();
 
 	void checkCollisionWithScreen();
+
+	bool checkWin();
 };
