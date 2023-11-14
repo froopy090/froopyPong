@@ -44,4 +44,8 @@ public:
 	void checkCollisionWithScreen();
 
 	bool checkWin();
+
+	bool checkWinRight();
+
+	bool checkWinLeft();
 };
