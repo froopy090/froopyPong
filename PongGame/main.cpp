@@ -27,7 +27,7 @@ int main() {
 
 	//init audio
 	InitAudioDevice();
-	Music track01 = LoadMusicStream("resources/froopyPongTrack01.wav");
+	Music track01 = LoadMusicStream("resources/stupid music.wav");
 	PlayMusicStream(track01);
 
 	//initializing ball and paddles
