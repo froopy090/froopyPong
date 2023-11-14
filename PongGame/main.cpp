@@ -18,7 +18,7 @@
 #define PADDING 60
 #define PAD_SPEED 500
 
-typedef enum GameScreen {LOGO = 0, TITLE, GAMEPLAY, GAMEOVER} GameScreen; //going to use this to separate the different screens
+typedef enum GameScreen {LOGO = 0, TITLE, GAMEPLAY, GAMEOVER1, GAMEOVER2} GameScreen; //going to use this to separate the different screens
 
 int main() {
 	//creating a window
@@ -77,17 +77,25 @@ int main() {
 		}
 			break;
 		case GAMEPLAY: {
-			if (winState) {
-				currentScreen = GAMEOVER;
+			if (ball.checkWinLeft()) {
+				currentScreen = GAMEOVER1;
+			}
+			if (ball.checkWinRight()) {
+				currentScreen = GAMEOVER2;
 			}
 		}
 			break;
-		case GAMEOVER: {
+		case GAMEOVER1: {
 			if (IsKeyPressed(KEY_SPACE)) { //press space to start a new game
 				currentScreen = TITLE;
 			}
 		}
 			break;
+		case GAMEOVER2: {
+			if (IsKeyPressed(KEY_SPACE)) { //press space to start a new game
+				currentScreen = TITLE;
+			}
+		}
 		default:
 			break;
 		}
@@ -160,24 +168,25 @@ int main() {
 						ball.setVelocityY(VELOCITY_Y * -1);
 					}
 				}
-
-				//win condition
-				winState = ball.checkWin();
 			}
 				break;
-			case GAMEOVER: {
-				if (ball.getPositionX() >= GetScreenWidth()) { //left side wins
-					DrawText(winTextLeft, GetScreenWidth() / 2 - (MeasureText(winTextLeft, 50) / 2), GetScreenHeight() / 2, 50, YELLOW);
-					DrawText(pressSpaceText2, GetScreenWidth() / 2 - MeasureText(pressSpaceText2, 20) / 2, GetScreenHeight() / 2 + 100, 20, YELLOW);
-					winState = 0;
-				}
-				if (ball.getPositionX() <= 0) { //right side wins
-					DrawText(winTextRight, GetScreenWidth() / 2 - (MeasureText(winTextLeft, 50) / 2), GetScreenHeight() / 2, 50, YELLOW);
-					DrawText(pressSpaceText2, GetScreenWidth() / 2 - MeasureText(pressSpaceText2, 20) / 2, GetScreenHeight() / 2 + 100, 20, YELLOW);
-					winState = 0;
-				}
+			case GAMEOVER1: {
+				DrawText(winTextLeft, GetScreenWidth() / 2 - (MeasureText(winTextLeft, 50) / 2), GetScreenHeight() / 2, 50, YELLOW);
+				DrawText(pressSpaceText2, GetScreenWidth() / 2 - MeasureText(pressSpaceText2, 20) / 2, GetScreenHeight() / 2 + 100, 20, YELLOW);
+				ball.setPosition(GetScreenWidth() / 2 - BALL_POSITION_OFFSET, GetScreenHeight() / 2); //reseting the ball
+				ball.setVelocity(VELOCITY_X, VELOCITY_Y);
+				paddleLeft.setPosition(paddleLeftPosX, paddlePosY); //reseting the paddles
+				paddleRight.setPosition(paddleRightPosX, paddlePosY);
 			}
 				break;
+			case GAMEOVER2: {
+				DrawText(winTextRight, GetScreenWidth() / 2 - (MeasureText(winTextLeft, 50) / 2), GetScreenHeight() / 2, 50, YELLOW);
+				DrawText(pressSpaceText2, GetScreenWidth() / 2 - MeasureText(pressSpaceText2, 20) / 2, GetScreenHeight() / 2 + 100, 20, YELLOW);
+				ball.setPosition(GetScreenWidth() / 2 + BALL_POSITION_OFFSET, GetScreenHeight() / 2); //reseting the ball
+				ball.setVelocity(VELOCITY_X * -1, VELOCITY_Y);
+				paddleLeft.setPosition(paddleLeftPosX, paddlePosY); //reseting the paddles
+				paddleRight.setPosition(paddleRightPosX, paddlePosY);
+			}
 			default:
 				break;
 			}
