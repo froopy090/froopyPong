@@ -25,6 +25,11 @@ int main() {
 	InitWindow(DIM_WIDTH, DIM_WIDTH, "froopyPong");
 	SetWindowState(FLAG_VSYNC_HINT); //VSYNCs my window so I don't get 3000+ fps lol
 
+	//init audio
+	InitAudioDevice();
+	Music track01 = LoadMusicStream("resources/froopyPongTrack01.wav");
+	PlayMusicStream(track01);
+
 	//initializing ball and paddles
 	Ball ball(RADIUS, GetScreenWidth() / 2 - BALL_POSITION_OFFSET, GetScreenHeight() / 2, VELOCITY_X, VELOCITY_Y);
 
@@ -56,6 +61,8 @@ int main() {
 
 
 	while (!WindowShouldClose()) { //basically this runs when my window isn't supposed to close
+		//Music Update
+		UpdateMusicStream(track01);
 
 		//Screen update
 		//--------------------------------------------------------------------------------------------------
@@ -193,6 +200,8 @@ int main() {
 		EndDrawing(); //always include this
 	}
 
+	UnloadMusicStream(track01);
 	CloseWindow(); //always include this
+	CloseAudioDevice();
 	return 0;
 }
