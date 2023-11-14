@@ -106,3 +106,21 @@
 			return 0;
 		}
 	}
+
+	bool Ball::checkWinRight() {
+		if (this->positionX <= 0) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+	bool Ball::checkWinLeft() {
+		if (this->positionX >= GetScreenWidth()) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
